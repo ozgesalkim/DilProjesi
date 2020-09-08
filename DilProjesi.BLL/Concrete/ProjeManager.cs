@@ -1,36 +1,78 @@
-﻿using DilProjesi.BLL.Abstact;
+﻿using AutoMapper;
+using DilProjesi.BLL.Abstact;
+using DilProjesi.BLL.Models.ProjeDto;
 using DilProjesi.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DilProjesi.BLL.Concrete
 {
     public class ProjeManager : IProjeService
     {
-        public void Add(Proje entity)
+        private readonly IAppDbContext _context;
+        private readonly IMapper _mapper;
+
+        public ProjeManager(IAppDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
         }
 
-        public void Delete(Proje entity)
+        public bool Add(CreateProjeDto model)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<Proje>(model);
+
+            _context.Proje.Add(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false;
         }
 
-        public List<Proje> GetAll()
+        public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            if (entity == null)
+            {
+                return false;
+            }
+
+            _context.Proje.Remove(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false;
         }
 
-        public List<Proje> GetById(int id)
+        public List<GetProjeDto> GetAll()
         {
-            throw new NotImplementedException();
+            var entities = _context.Proje.ToList();
+
+            var models = _mapper.Map<List<GetProjeDto>>(entities);
+
+            return models;
         }
 
-        public void Update(Proje entity)
+        public GetProjeDto GetById(int id)
         {
-            throw new NotImplementedException();
+            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+
+            var model = _mapper.Map<GetProjeDto>(entity);
+
+            return model;
+        }
+
+        public bool Update(UpdateProjeDto model)
+        {
+            var entity = _mapper.Map<Proje>(model);
+
+            _context.Proje.Update(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false;
         }
     }
 }

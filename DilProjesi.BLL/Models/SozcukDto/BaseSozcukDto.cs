@@ -4,15 +4,12 @@ using System.Text;
 
 namespace DilProjesi.BLL.Models.SozcukDto
 {
-    class BaseSozcukDto
+    public class BaseSozcukDto
     {
-
         public int Id { get; set; }
 
         public string Ad { get; set; }
 
-        public string Anahtar { get; set; }
-
-        public string Aciklama { get; set; }
+        public int? FkProjeId { get; set; }
     }
 }

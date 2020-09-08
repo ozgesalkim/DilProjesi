@@ -1,4 +1,5 @@
-﻿using DilProjesi.BLL.Abstact;
+﻿using AutoMapper;
+using DilProjesi.BLL.Abstact;
 using DilProjesi.BLL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,7 +13,7 @@ namespace DilProjesi.BLL
     {
         public static IServiceCollection AddBLL(this IServiceCollection services)
         {
-            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IDilService, DilManager>();
             services.AddScoped<IProjeService, ProjeManager>();
             services.AddScoped<ISozcukService, SozcukManager>();

@@ -1,4 +1,7 @@
-﻿using DilProjesi.BLL.Abstact;
+﻿using AutoMapper;
+using DilProjesi.BLL.Abstact;
+using DilProjesi.BLL.Models.DilDto;
+using DilProjesi.BLL.Models.ProjeDto;
 using DilProjesi.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,35 +13,68 @@ namespace DilProjesi.BLL.Concrete
     public class DilManager : IDilService
     {
         private readonly IAppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public DilManager(IAppDbContext context)
+        public DilManager(IAppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+        public bool Add(CreateDilDto model)
+        {
+            var entity = _mapper.Map<Proje>(model);
+
+            _context.Proje.Add(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false; ;
         }
 
-        public void Add(Dil entity)
+        public bool Delete(int id)
+
         {
-            throw new NotImplementedException();
+            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            if (entity == null)
+            {
+                return false;
+            }
+
+            _context.Proje.Remove(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false;
         }
 
-        public void Delete(Dil entity)
+        public List<GetDilDto> GetAll()
         {
-            throw new NotImplementedException();
+            var entities = _context.Proje;
+
+            var models = _mapper.Map<List<GetDilDto>>(entities);
+
+            return models;
         }
 
-        public List<Dil> GetAll()
+        public GetDilDto GetById(int id)
         {
-            return _context.Dil.ToList();
+            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+
+            var model = _mapper.Map<GetDilDto>(entity);
+
+            return model;
         }
 
-        public List<Dil> GetById(int id)
+        public bool Update(UpdateDilDto model)
         {
-            throw new NotImplementedException();
-        }
+            var entity = _mapper.Map<Proje>(model);
 
-        public void Update(Dil entity)
-        {
-            throw new NotImplementedException();
+            _context.Proje.Update(entity);
+
+            var result = _context.SaveChanges();
+
+            return result > 0 ? true : false;
         }
     }
-}
+
+       }

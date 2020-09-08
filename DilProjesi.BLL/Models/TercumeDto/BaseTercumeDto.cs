@@ -4,15 +4,14 @@ using System.Text;
 
 namespace DilProjesi.BLL.Models.TercumeDto
 {
-    class BaseTercumeDto
+    public class BaseTercumeDto
     {
-
         public int Id { get; set; }
 
-        public string Ad { get; set; }
+        public int FkSozcukId { get; set; }
 
-        public string Anahtar { get; set; }
+        public int FkDilId { get; set; }
 
-        public string Aciklama { get; set; }
+        public string Ceviri { get; set; }
     }
 }

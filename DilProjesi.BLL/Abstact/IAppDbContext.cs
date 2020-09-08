@@ -12,5 +12,6 @@ namespace DilProjesi.BLL.Abstact
         DbSet<Sozcuk> Sozcuk { get; set; }
         DbSet<Dil> Dil { get; set; }
         DbSet<Tercume> Tercume { get; set; }
+        int SaveChanges();
     }
 }

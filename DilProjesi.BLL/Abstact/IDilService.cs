@@ -1,4 +1,5 @@
-﻿using DilProjesi.DOMAIN.Entities;
+﻿using DilProjesi.BLL.Models.DilDto;
+using DilProjesi.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,10 +8,10 @@ namespace DilProjesi.BLL.Abstact
 {
     public interface IDilService
     {
-        List<Dil> GetAll();
-        List<Dil> GetById(int id);
-        void Add(Dil entity);
-        void Update(Dil entity);
-        void Delete(Dil entity);
+        List<GetDilDto> GetAll();
+        GetDilDto GetById(int id);
+        bool Add(CreateDilDto model);
+        bool Update(UpdateDilDto model);
+        bool Delete(int id);
     }
 }
