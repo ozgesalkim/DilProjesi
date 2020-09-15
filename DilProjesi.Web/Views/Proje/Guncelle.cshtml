@@ -1,0 +1,16 @@
+﻿@model ProjeGuncelleViewModel
+@{
+    ViewData["Title"] = "Proje Güncelleme";
+}
+
+<h1>Proje Güncelleme</h1>
+
+<form asp-controller="Proje" asp-action="GuncellePost" method="post">
+    <input type="hidden" asp-for="Proje.Id" />
+
+    <div class="form-group">
+        <label>Proje Adı</label>
+        <input asp-for="Proje.Ad" class="form-control" placeholder="Proje Adı">
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

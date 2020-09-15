@@ -1,0 +1,19 @@
+﻿@model ProjeSilViewModel
+@{
+    ViewData["Title"] = "Proje Silme";
+}
+
+<h1>Proje Silme</h1>
+
+<form asp-controller="Proje" asp-action="SilPost" method="post">
+    <h3>Silmek istediğinize emin misiniz?</h3>
+    <div class="form-group">
+        <label>Proje Id</label>
+        <input class="form-control" asp-for="Proje.Id" readonly />
+    </div>
+    <div class="form-group">
+        <label>Proje Adı</label>
+        <input asp-for="Proje.Ad" class="form-control" placeholder="Proje Adı" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Sil</button>
+</form>

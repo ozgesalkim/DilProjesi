@@ -1,0 +1,14 @@
+﻿@model ProjeEkleViewModel
+@{
+    ViewData["Title"] = "Yeni Proje Ekleme";
+}
+
+<h1>Yeni Proje Ekleme</h1>
+
+<form asp-controller="Proje" asp-action="EklePost" method="post">
+    <div class="form-group">
+        <label>Proje Adı</label>
+        <input asp-for="Proje.Ad" class="form-control" placeholder="Proje Adı">
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

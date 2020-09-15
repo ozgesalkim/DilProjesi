@@ -10,6 +10,7 @@ namespace DilProjesi.BLL.Abstact
     {
         List<GetProjeDto> GetAll();
         GetProjeDto GetById(int id);
+        UpdateProjeDto GetByIdForUpdate(int id);
         bool Add(CreateProjeDto model);
         bool Update(UpdateProjeDto model);
         bool Delete(int id);

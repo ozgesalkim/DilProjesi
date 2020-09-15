@@ -13,26 +13,89 @@ namespace DilProjesi.Web.Controllers
 {
     public class ProjeController : Controller
     {
-        private readonly ILogger<ProjeController> _logger;
+        private readonly IProjeService _projeService;
 
-        public ProjeController(ILogger<ProjeController> logger)
+        public ProjeController(IProjeService projeService)
         {
-            _logger = logger;
+            _projeService = projeService;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IActionResult Listele()
+        {
+            var models = _projeService.GetAll();
+            var viewModel = new ProjeListeleViewModel()
+            {
+                Projeler = models
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Ekle()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult EklePost(ProjeEkleViewModel viewModel)
         {
-            return View();
+            var sonuc =_projeService.Add(viewModel.Proje);
+            if (sonuc)
+            {
+                return RedirectToAction(nameof(Listele));
+            }
+
+            return View(viewModel);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult Guncelle(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var sonuc = _projeService.GetByIdForUpdate(id);
+            var viewModel = new ProjeGuncelleViewModel()
+            {
+                Proje = sonuc
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult GuncellePost(ProjeGuncelleViewModel viewModel)
+        {
+            var sonuc = _projeService.Update(viewModel.Proje);
+            if (sonuc)
+            {
+                return RedirectToAction(nameof(Listele));
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Sil(int id)
+        {
+            var sonuc = _projeService.GetById(id);
+            var viewModel = new ProjeSilViewModel()
+            {
+                Proje = sonuc
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SilPost(ProjeGuncelleViewModel viewModel)
+        {
+            var sonuc = _projeService.Delete(viewModel.Proje.Id);
+            if (sonuc)
+            {
+                return RedirectToAction(nameof(Listele));
+            }
+
+            return View(viewModel);
         }
     }
 }

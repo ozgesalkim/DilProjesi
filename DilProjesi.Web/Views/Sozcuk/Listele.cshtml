@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Sözcük Listele";
+}
+
+<h1>Sözcük Listele</h1>
+<div class="text-right mb-1">
+    <a class="btn btn-sm btn-info" asp-controller="Sozcuk" asp-action="Ekle"><i class="fa fa-plus" aria-hidden="true"></i> Yeni Sözcük Ekle</a>
+</div>
+<br />
+
+<div style="margin:0 auto;">
+    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ad</th>
+                <th>Proje</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+     $(document).ready(function() {
+        $("#example").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "@Url.Action("LoadTable", "Sozcuk")",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "ad", "name": "Ad", "autoWidth": true },
+                { "data": "proje.ad", "name": "Proje Adı", "autoWidth": true },
+                {
+                    data: null,
+                    orderable: false,
+                    "render": function(data, type, full, meta) { return '<a class="btn btn-info" href="/Sozcuk/Guncelle/' + full.id + '">Güncelle</a>'; }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function(data, type, row) {
+                        return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.id + "'); >Sil</a>";
+                    }
+                },
+            ]
+        });
+     });
+
+    function DeleteData(id) {
+        if (confirm("Are you sure you want to delete ...?")) {
+            Delete(id);
+        } else {
+            return false;
+        }
+    }
+
+    function Delete(CustomerID) {
+        var url = '@Url.Content("~/")' + "Sozcuk/Sil";
+
+        $.post(url, { id: id }, function(data) {
+            if (data) {
+                oTable = $('#example').DataTable();
+                oTable.draw();
+            } else {
+                alert("Something Went Wrong!");
+            }
+        });
+    }
+    </script>
+}

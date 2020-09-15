@@ -1,0 +1,26 @@
+﻿@model DilGuncelleViewModel
+@{
+    ViewData["Title"] = "Dil Güncelleme";
+}
+
+<h1>Dil Güncelleme</h1>
+
+<form asp-controller="Dil" asp-action="GuncellePost" method="post">
+    <input type="hidden" asp-for="Dil.Id" />
+
+    <div class="form-group">
+        <label>Dil Adı</label>
+        <input asp-for="Dil.Ad" class="form-control" placeholder="Dili seçiniz">
+        <span asp-validation-for="Dil.Ad" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Anahtar</label>
+        <input asp-for="Dil.Anahtar" class="form-control" placeholder="Anahtar">
+        <span asp-validation-for="Dil.Anahtar" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Açıklama</label>
+        <input asp-for="Dil.Aciklama" class="form-control" placeholder="Açıklama">
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

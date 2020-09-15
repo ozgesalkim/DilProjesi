@@ -14,5 +14,7 @@ namespace DilProjesi.BLL.Models.SozcukDto
         {
             profile.CreateMap<Sozcuk, UpdateSozcukDto>().ReverseMap();
         }
+
+        public virtual ICollection<GetTercumeDto> Tercumeler { get; set; }
     }
 }

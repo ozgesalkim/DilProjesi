@@ -1,0 +1,71 @@
+﻿@model SozcukEkleViewModel
+
+@{
+    ViewData["Title"] = "Yeni Sözcük Ekleme";
+}
+
+<h1>Yeni Sözcük Ekleme</h1>
+
+<form asp-controller="Sozcuk" asp-action="EklePost" method="post">
+    <div class="form-group">
+        <label>Proje</label>
+        <select asp-for="Sozcuk.FkProjeId" asp-items="@ViewBag.Projeler" class="form-control">
+            <option>Lütfen Proje Seçin</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Sozcuk Adı</label>
+        <input asp-for="Sozcuk.Ad" class="form-control" placeholder="Sözcük Adı">
+    </div>
+    <div class="form-group">
+        <label>Diller</label>
+        <ul>
+            @if (Model.Diller != null && Model.Diller.Any())
+            {
+                for (var i = 0; i < Model.Diller.Count; i++)
+                {
+                    <li>
+                        <input type="checkbox" asp-for="@Model.Diller[i].SeciliMi" data-id="@Model.Diller[i].Id" data-ad="@Model.Diller[i].Ad" />
+                        <label asp-for="@Model.Diller[i].SeciliMi">@Model.Diller[i].Ad</label>
+                        <input type="hidden" asp-for="@Model.Diller[i].Id" />
+                        <input type="hidden" asp-for="@Model.Diller[i].Ad" />
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div id="tercumeler">
+
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>
+
+@section Scripts{
+    <script>
+        var tercumeSayisi = 0;
+
+        $(document).ready(function () {
+            $('input[type=checkbox]').change(function () {
+                var dilId = $(this).data("id");
+                var dilAd = $(this).data("ad");
+
+                console.log(dilId);
+                console.log(dilAd);
+
+                if (this.checked) {
+                    $('#tercumeler')
+                        .append('<div class="form-group" id=' + dilId + '> ' +
+                            '<label>'+ dilAd +' Tercümesi</label>' +
+                            '<input name="Sozcuk.Tercumeler[' + tercumeSayisi + '].Ceviri" class="form-control" placeholder="Tercüme">' +
+                            '<input name="Sozcuk.Tercumeler[' + tercumeSayisi +'].FkDilId" type="hidden" class="form-control" value="'+dilId+'">'+
+                            '</div>');
+
+                    tercumeSayisi++;
+                } else {
+                    $('#' + dilId).remove();
+                    tercumeSayisi--;
+                }
+            });
+        });
+    </script>
+}

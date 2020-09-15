@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DilProjesi.BLL.Abstact;
 using DilProjesi.BLL.Models.DilDto;
-using DilProjesi.BLL.Models.ProjeDto;
 using DilProjesi.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,9 +21,9 @@ namespace DilProjesi.BLL.Concrete
         }
         public bool Add(CreateDilDto model)
         {
-            var entity = _mapper.Map<Proje>(model);
+            var entity = _mapper.Map<Dil>(model);
 
-            _context.Proje.Add(entity);
+            _context.Dil.Add(entity);
 
             var result = _context.SaveChanges();
 
@@ -34,13 +33,13 @@ namespace DilProjesi.BLL.Concrete
         public bool Delete(int id)
 
         {
-            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Dil.FirstOrDefault(x => x.Id == id);
             if (entity == null)
             {
                 return false;
             }
 
-            _context.Proje.Remove(entity);
+            _context.Dil.Remove(entity);
 
             var result = _context.SaveChanges();
 
@@ -49,7 +48,7 @@ namespace DilProjesi.BLL.Concrete
 
         public List<GetDilDto> GetAll()
         {
-            var entities = _context.Proje;
+            var entities = _context.Dil;
 
             var models = _mapper.Map<List<GetDilDto>>(entities);
 
@@ -58,18 +57,27 @@ namespace DilProjesi.BLL.Concrete
 
         public GetDilDto GetById(int id)
         {
-            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Dil.FirstOrDefault(x => x.Id == id);
 
             var model = _mapper.Map<GetDilDto>(entity);
 
             return model;
         }
 
+        public UpdateDilDto GetByIdForUpdate(int id)
+        {
+            var entity = _context.Dil.FirstOrDefault(x => x.Id == id);
+
+            var model = _mapper.Map<UpdateDilDto>(entity);
+
+            return model;
+        }
+
         public bool Update(UpdateDilDto model)
         {
-            var entity = _mapper.Map<Proje>(model);
+            var entity = _mapper.Map<Dil>(model);
 
-            _context.Proje.Update(entity);
+            _context.Dil.Update(entity);
 
             var result = _context.SaveChanges();
 

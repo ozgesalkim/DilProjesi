@@ -64,6 +64,15 @@ namespace DilProjesi.BLL.Concrete
             return model;
         }
 
+        public UpdateProjeDto GetByIdForUpdate(int id)
+        {
+            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+
+            var model = _mapper.Map<UpdateProjeDto>(entity);
+
+            return model;
+        }
+
         public bool Update(UpdateProjeDto model)
         {
             var entity = _mapper.Map<Proje>(model);

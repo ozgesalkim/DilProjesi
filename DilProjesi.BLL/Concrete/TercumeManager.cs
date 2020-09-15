@@ -22,9 +22,9 @@ namespace DilProjesi.BLL.Concrete
         }
         public bool Add(CreateTercumeDto model)
         {
-            var entity = _mapper.Map<Proje>(model);
+            var entity = _mapper.Map<Tercume>(model);
 
-            _context.Proje.Add(entity);
+            _context.Tercume.Add(entity);
 
             var result = _context.SaveChanges();
 
@@ -33,13 +33,13 @@ namespace DilProjesi.BLL.Concrete
 
         public bool Delete(int id)
         {
-            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Tercume.FirstOrDefault(x => x.Id == id);
             if (entity == null)
             {
                 return false;
             }
 
-            _context.Proje.Remove(entity);
+            _context.Tercume.Remove(entity);
 
             var result = _context.SaveChanges();
 
@@ -48,7 +48,7 @@ namespace DilProjesi.BLL.Concrete
 
         public List<GetTercumeDto> GetAll()
         {
-            var entities = _context.Proje;
+            var entities = _context.Tercume;
 
             var models = _mapper.Map<List<GetTercumeDto>>(entities);
 
@@ -57,7 +57,7 @@ namespace DilProjesi.BLL.Concrete
 
         public GetTercumeDto GetById(int id)
         {
-            var entity = _context.Proje.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Tercume.FirstOrDefault(x => x.Id == id);
 
             var model = _mapper.Map<GetTercumeDto>(entity);
 
@@ -66,9 +66,9 @@ namespace DilProjesi.BLL.Concrete
 
         public bool Update(UpdateTercumeDto model)
         {
-            var entity = _mapper.Map<Proje>(model);
+            var entity = _mapper.Map<Tercume>(model);
 
-            _context.Proje.Update(entity);
+            _context.Tercume.Update(entity);
 
             var result = _context.SaveChanges();
 

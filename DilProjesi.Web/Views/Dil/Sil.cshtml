@@ -1,0 +1,27 @@
+﻿@model DilSilViewModel
+@{
+    ViewData["Title"] = "Dil Silme";
+}
+
+<h1>Dil Silme</h1>
+
+<form asp-controller="Dil" asp-action="SilPost" method="post">
+    <h3>Silmek istediğinize emin misiniz?</h3>
+    <div class="form-group">
+        <label>Dil Id</label>
+        <input class="form-control" asp-for="Dil.Id" readonly />
+    </div>
+    <div class="form-group">
+        <label>Dil Adı</label>
+        <input asp-for="Dil.Ad" class="form-control" placeholder="Dili seçiniz" readonly>
+    </div>
+    <div class="form-group">
+        <label>Anahtar</label>
+        <input asp-for="Dil.Anahtar" class="form-control" placeholder="Anahtar" readonly>
+    </div>
+    <div class="form-group">
+        <label>Açıklama</label>
+        <input asp-for="Dil.Aciklama" class="form-control" placeholder="Açıklama" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Sil</button>
+</form>
